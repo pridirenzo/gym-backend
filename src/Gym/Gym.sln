@@ -4,12 +4,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{954A76B5-C101-4E57-BA96-3511A7B3DB16}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AFF35C52-4573-4A75-8664-36D36AA2B8E2} = {AFF35C52-4573-4A75-8664-36D36AA2B8E2}
+		{F22ABABE-89E9-423D-B918-0911127D5008} = {F22ABABE-89E9-423D-B918-0911127D5008}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{F22ABABE-89E9-423D-B918-0911127D5008}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{F22ABABE-89E9-423D-B918-0911127D5008}"
+	ProjectSection(ProjectDependencies) = postProject
+		{00932058-C516-4417-A850-D6B155F490D8} = {00932058-C516-4417-A850-D6B155F490D8}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{00932058-C516-4417-A850-D6B155F490D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{00932058-C516-4417-A850-D6B155F490D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructure", "Infraestructure\Infraestructure.csproj", "{AFF35C52-4573-4A75-8664-36D36AA2B8E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infraestructure\Infrastructure.csproj", "{AFF35C52-4573-4A75-8664-36D36AA2B8E2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F22ABABE-89E9-423D-B918-0911127D5008} = {F22ABABE-89E9-423D-B918-0911127D5008}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
