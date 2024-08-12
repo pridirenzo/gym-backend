@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Data
 {
+
     public class GymContext : DbContext
     {
+
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Machine> Machines { get; set; }
         public DbSet<Routine> Routines { get; set; }
@@ -21,6 +23,7 @@ namespace Infraestructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+        
             modelBuilder.Entity<Exercise>()
                 .HasOne(e => e.Machines)
                 .WithMany(m => m.Exercises)

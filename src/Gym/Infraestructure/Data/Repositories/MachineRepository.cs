@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enum;
 using Infraestructure.Data;
 using Infrastructure.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,21 +14,43 @@ namespace Infrastructure.Data.Repositories
 {
     public class MachineRepository : IMachineRepository
     {
-        private readonly GymContext _context;
-
-        public MachineRepository(GymContext context)
+        // maquinas hardcodeadas
+        private static readonly List<Machine> _machines = new List<Machine>
         {
-            _context = context;
+            new Machine { MachineId = 1, Name = "Machine 1", Category = Category.Chest },
+            new Machine { MachineId = 2, Name = "Machine 2", Category = Category.ABS }
+        };
+
+
+        public Task<IEnumerable<Machine>> GetAllMachines()
+        {
+            return Task.FromResult(_machines.AsEnumerable());
         }
 
-        public async Task<IEnumerable<Machine>> GetAllMachines()
+        public Task<Machine> GetMachineById(int id)
         {
-            return await _context.Machines.ToListAsync();
-        }
-
-        public async Task<Machine> GetMachineById(int id)
-        {
-            return await _context.Machines.FirstOrDefaultAsync(m => m.MachineId == id);
+            var machine = _machines.FirstOrDefault(m => m.MachineId == id);
+            return Task.FromResult(machine);
         }
     }
 }
+/* Metodo original para db
+ * 
+ private readonly GymContext _context;
+
+public MachineRepository(GymContext context)
+{
+    _context = context;
+}
+
+public async Task<IEnumerable<Machine>> GetAllMachines()
+{
+    return await _context.Machines.ToListAsync();
+}
+
+public async Task<Machine> GetMachineById(int id)
+{
+    return await _context.Machines.FirstOrDefaultAsync(m => m.MachineId == id);
+}
+}
+}*/
