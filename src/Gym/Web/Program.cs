@@ -1,4 +1,5 @@
 using Infraestructure.Data;
+using Infrastructure.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -30,6 +31,11 @@ builder.Services.AddSwaggerGen(setupAction =>
 
     });
 });
+
+
+//Services
+builder.Services.AddScoped<IMachineRepository, Infrastructure.Data.Repositories.MachineRepository>();
+
 
 // Configuración de la base de datos
 builder.Services.AddDbContext<GymContext>(dbContextOptions => dbContextOptions.UseSqlite(
