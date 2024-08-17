@@ -15,7 +15,7 @@ namespace Domain.Entities
         public string Name { get; set; }
         [Required]
         public int Duration { get; set; }
-        public ICollection<RoutineExercise> RoutineExercises { get; set; }
+        public ICollection<RoutineExercise> RoutineExercise { get; set; }
 
         [Required]
         public Difficulty Difficulty { get; set; }

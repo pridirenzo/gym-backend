@@ -31,16 +31,22 @@ namespace Infraestructure.Data
 
             modelBuilder.Entity<RoutineExercise>()
                 .HasOne(re => re.Routine)
-                .WithMany(r => r.RoutineExercises)
+                .WithMany(r => r.RoutineExercise)
                 .HasForeignKey(re => re.RoutineId);
 
             modelBuilder.Entity<RoutineExercise>()
                 .HasOne(re => re.Exercise)
-                .WithMany(e => e.RoutineExercises)
+                .WithMany(e => e.RoutineExercise)
                 .HasForeignKey(re => re.ExerciseId);
 
 
             base.OnModelCreating(modelBuilder);
+
+            //Disable all default relationship cascade delete behavior
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.NoAction;
+            }
         }
     }
 }

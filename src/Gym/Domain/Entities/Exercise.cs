@@ -11,15 +11,16 @@ namespace Domain.Entities
 {
     public class Exercise
     {
-        [Required]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int  ExerciseId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public Category Category { get; set; }
         [ForeignKey("MachineId")]
-        public Machine Machines { get; set; }
-        public int MachineId { get; set; }
-        public ICollection<RoutineExercise> RoutineExercises { get; set; }
+        public Machine? Machines { get; set; }
+        public int? MachineId { get; set; }
+        public ICollection<RoutineExercise> RoutineExercise { get; set; }
     }
 }
