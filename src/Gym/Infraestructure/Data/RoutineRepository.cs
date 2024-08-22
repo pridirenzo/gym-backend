@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Enum;
-using Domain.Intefaces;
-using Infraestructure.Data;
+using Domain.Interfaces;
+using Infrastructure.Data;
 
 namespace Infrastructure.Data
 {
@@ -18,7 +18,7 @@ namespace Infrastructure.Data
 
         public IEnumerable<Routine> GetRoutineForDifficulty(Difficulty difficulty)
         {
-            return _context.Routines.Where(r => r.Difficulty == difficulty).ToList();
+            return _context.Routines.Where(r => r.Difficulty == difficulty);
         }
 
         public void CreateRoutine(Routine routine)
@@ -36,6 +36,11 @@ namespace Infrastructure.Data
         {
             _context.Routines.Update(routine);
             SaveChanges();
+        }
+
+        public Routine GetRoutineById(int routineId)
+        {
+            return _context.Routines.Find(routineId);
         }
     }
 }

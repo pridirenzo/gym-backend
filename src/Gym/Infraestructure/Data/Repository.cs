@@ -1,5 +1,5 @@
-﻿using Domain.Intefaces;
-using Infraestructure.Data;
+﻿using Domain.Interfaces;
+using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;

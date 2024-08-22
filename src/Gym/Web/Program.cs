@@ -1,4 +1,7 @@
-using Infraestructure.Data;
+using Application.Interfaces;
+using Application.Serices;
+using Domain.Interfaces;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -14,6 +17,19 @@ builder.Services.AddSwaggerGen();
 // Configuración de la base de datos
 builder.Services.AddDbContext<GymContext>(dbContextOptions => dbContextOptions.UseSqlite(
     builder.Configuration["DB:ConnectionStrings"]));
+
+// Configuración de AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+#region Repository
+builder.Services.AddScoped<IRoutineRepository, RoutineRepository>();
+#endregion
+
+#region Service
+builder.Services.AddScoped<IRoutineService, RoutineService>();
+builder.Services.AddScoped<IOperationResultService, OperationResultService>();
+#endregion
+
 
 var app = builder.Build();
 
