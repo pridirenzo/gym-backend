@@ -1,5 +1,6 @@
-using Infraestructure.Data;
-using Infrastructure.Data.Interfaces;
+using Application.Interfaces;
+using Application.Services;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -10,36 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(setupAction =>
-{
-    setupAction.AddSecurityDefinition("ApiBearerAuth", new OpenApiSecurityScheme()
-    {
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        Description = "TokenLog"
-    });
-
-    setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "ApiBearerAuth" } }, new List<string>() }
-
-    });
-});
-
-
-//Services
-builder.Services.AddScoped<IMachineRepository, Infrastructure.Data.Repositories.MachineRepository>();
-
+builder.Services.AddSwaggerGen();
 
 // Configuración de la base de datos
 builder.Services.AddDbContext<GymContext>(dbContextOptions => dbContextOptions.UseSqlite(
     builder.Configuration["DB:ConnectionStrings"]));
+
+#region Repositories
+#endregion
+
+#region Services
+builder.Services.AddScoped<IMachineRepository, MachineRepository>();
+#endregion
 
 var app = builder.Build();
 

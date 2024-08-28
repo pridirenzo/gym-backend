@@ -1,8 +1,8 @@
-﻿using Infrastructure.Data.Interfaces;
+﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Web.Controllers
+namespace Web.Controllers.Controller
 {
     [Route("api/machine")]
     [ApiController]
