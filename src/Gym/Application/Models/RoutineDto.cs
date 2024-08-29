@@ -11,6 +11,7 @@ namespace Application.Models
 {
     public class RoutineDto
     {
+        public List<int> ExercisesId { get; set; }
         public string Name { get; set; }
         public int Duration { get; set; }
         public Difficulty Difficulty { get; set; }

@@ -11,6 +11,6 @@ namespace Domain.Interfaces
         void CreateRoutine (Routine routine);
         void DeleteRoutine (Routine routine);
         void UpdateRoutine (Routine routine);
-
+        void CreateRoutineExcercise(RoutineExercise newRoutineExercise);
     }
 }

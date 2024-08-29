@@ -22,10 +22,21 @@ namespace Application.Serices
         }
         public OperationResult CreateRoutine(RoutineDto routineDto)
         {
-            var newRoutine = _mapper.Map<Routine>(routineDto);
+
+            var newRoutine = new Routine(routineDto.Name, routineDto.Duration, routineDto.Difficulty);
             _routineRepository.CreateRoutine(newRoutine);
+
+            foreach (int i in routineDto.ExercisesId)
+            {
+            var newRoutineExercise = new RoutineExercise(newRoutine.RoutineId,i);
+            _routineRepository.CreateRoutineExcercise(newRoutineExercise);
+            }
+            // Crea la entidad de unión RoutineExercise para asociar la rutina y el ejercicio
+            // Guarda la entidad de unión en el repositorio correspondiente
+
             return _operationResultService.CreateSuccessResult("Routine Created");
         }
+
         public RoutineDto GetRoutineById(int routineId)
         {
             var getRoutine = _routineRepository.GetRoutineById(routineId);

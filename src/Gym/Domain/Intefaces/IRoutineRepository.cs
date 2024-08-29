@@ -7,6 +7,7 @@ namespace Domain.Intefaces
     {
         IEnumerable<Routine> GetAllRoutine();
         IEnumerable<Routine> GetRoutineForDifficulty(Difficulty difficulty);
+        void CreateRoutineExcercise(RoutineExercise routineExercise);
         void CreateRoutine (Routine routine);
         void DeleteRoutine (Routine routine);
         void UpdateRoutine (Routine routine);

@@ -14,6 +14,7 @@ namespace Infrastructure.Data
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Machine> Machines { get; set; }
         public DbSet<Routine> Routines { get; set; }
+        public DbSet<RoutineExercise> RoutinesExercises { get; set; }
 
         public GymContext(DbContextOptions<GymContext> options) : base(options)
         {

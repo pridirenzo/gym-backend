@@ -19,5 +19,12 @@ namespace Domain.Entities
 
         [Required]
         public Difficulty Difficulty { get; set; }
+        public Routine(string name,int duration, Difficulty difficulty)
+        {
+            Name = name;
+            Duration = duration;
+            Difficulty = difficulty;
+            
+        }
     }
 }

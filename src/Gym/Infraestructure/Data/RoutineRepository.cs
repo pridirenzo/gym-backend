@@ -27,6 +27,12 @@ namespace Infrastructure.Data
             SaveChanges();
         }
 
+        public void CreateRoutineExcercise(RoutineExercise routineExercise)
+        {
+            _context.RoutinesExercises.Add(routineExercise);
+            SaveChanges();
+        }
+
         public void DeleteRoutine(Routine routine)
         {
             _context.Routines.Remove(routine);
