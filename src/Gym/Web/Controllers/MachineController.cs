@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Web.Controllers.Controller
+namespace Web.Controllers
 {
     [Route("api/machine")]
     [ApiController]

@@ -1,5 +1,4 @@
-﻿
-using Domain.Enum;
+﻿using Domain.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,8 +15,13 @@ namespace Domain.Entities
         [Required]
         public int Duration { get; set; }
         public ICollection<RoutineExercise> RoutineExercise { get; set; }
-
         [Required]
         public Difficulty Difficulty { get; set; }
+        public Routine(string name, int duration, Difficulty difficulty)
+        {
+            Name = name;
+            Duration = duration;
+            Difficulty = difficulty;
+        }
     }
 }

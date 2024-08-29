@@ -1,11 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
@@ -14,6 +8,7 @@ namespace Infrastructure.Data
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Machine> Machines { get; set; }
         public DbSet<Routine> Routines { get; set; }
+        public DbSet<RoutineExercise> RoutinesExercises { get; set; }
 
         public GymContext(DbContextOptions<GymContext> options) : base(options)
         {
