@@ -23,12 +23,14 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 #region Repositories
 builder.Services.AddScoped<IRoutineRepository, RoutineRepository>();
+builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 #endregion
 
 #region Services
 builder.Services.AddScoped<IRoutineService, RoutineService>();
 builder.Services.AddScoped<IOperationResultService, OperationResultService>();
 builder.Services.AddScoped<IMachineRepository, MachineRepository>();
+builder.Services.AddScoped<IExerciseService, ExerciseService>();
 #endregion
 
 
