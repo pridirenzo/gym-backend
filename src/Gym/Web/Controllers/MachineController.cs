@@ -1,10 +1,10 @@
-﻿using Infrastructure.Data.Interfaces;
+﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
 {
-    [Route("api/machine")]
+    [Route("api/[controller]")]
     [ApiController]
     public class MachineController : ControllerBase
     {
@@ -15,7 +15,7 @@ namespace Web.Controllers
             _machineRepository = machineRepository;
         }
 
-        [HttpGet("machines")]
+        [HttpGet("GetAllMachine")]
         public async Task<IActionResult> GetAllMachines()
         {
             var machines = await _machineRepository.GetAllMachines();
@@ -28,7 +28,7 @@ namespace Web.Controllers
             return Ok(machines);
         }
 
-        [HttpGet("{machineId}")]
+        [HttpGet("GetById/{machineId}")]
         public async Task<IActionResult> GetMachineById(int machineId)
         {
             var machine = await _machineRepository.GetMachineById(machineId);
