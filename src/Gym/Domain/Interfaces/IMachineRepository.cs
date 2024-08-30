@@ -6,6 +6,6 @@ namespace Domain.Interfaces
     {
         ICollection<Machine> GetAllMachines();
 
-        Machine GetExerciseById(int id);
+        Machine GetMachineById(int id);
     }
 }

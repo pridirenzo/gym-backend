@@ -12,23 +12,23 @@ namespace Application.Services
 
         private readonly IMachineRepository _machineRepository;
         private readonly IMapper _mapper;
-        public MachineService(IMachineRepository exerciseRepository, IMapper mapper)
+        public MachineService(IMachineRepository machineRepository, IMapper mapper)
         {
-            _exerciseRepository = exerciseRepository;
+            _machineRepository = machineRepository;
             _mapper = mapper;
         }
 
         public ICollection<MachineDto> GetAllMachines()
         {
-            var exercises = _machineRepository.GetAllMachines();
+            var machines = _machineRepository.GetAllMachines();
             return _mapper.Map<ICollection<MachineDto>>(machines);
         }
 
         public MachineDto GetMachineById(int id)
         {
-            var exercise = _machineRepository.GetMachineById(id);
-            if (exercise == null) throw new KeyNotFoundException($"The given key '{id}' does not correspond to an exercise.");
-            return _mapper.Map<MachineDto>(exercise);
+            var machine = _machineRepository.GetMachineById(id);
+            if (machine == null) throw new KeyNotFoundException($"The given key '{id}' does not correspond to a machine.");
+            return _mapper.Map<MachineDto>(machine);
         }
     }
 }

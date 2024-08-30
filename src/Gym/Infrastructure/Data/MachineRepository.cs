@@ -16,7 +16,7 @@ namespace Infrastructure.Data
             return _context.Machines.ToList();
         }
 
-        public Machine GetExerciseById(int id)
+        public Machine GetMachineById(int id)
         {
             return _context.Machines.Find(id);
         }

@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,17 +9,17 @@ namespace Web.Controllers
     [ApiController]
     public class MachineController : ControllerBase
     {
-        private readonly IMachineRepository _machineRepository;
+        private readonly IMachineService _machineService;
 
-        public MachineController(IMachineRepository machineRepository)
+        public MachineController(IMachineService machineService)
         {
-            _machineRepository = machineRepository;
+            _machineService = machineService;
         }
 
         [HttpGet("GetAllMachine")]
-        public async Task<IActionResult> GetAllMachines()
+        public IActionResult GetAllMachines()
         {
-            var machines = await _machineRepository.GetAllMachines();
+            var machines = _machineService.GetAllMachines();
 
             if (machines == null || !machines.Any())
             {
@@ -29,16 +30,16 @@ namespace Web.Controllers
         }
 
         [HttpGet("GetById/{machineId}")]
-        public async Task<IActionResult> GetMachineById(int machineId)
+        public IActionResult GetMachineById(int machineId)
         {
-            var machine = await _machineRepository.GetMachineById(machineId);
-
-            if (machine == null)
+            try
             {
-                return NotFound("Machine not found");
+                return Ok(_machineService.GetMachineById(machineId));
             }
-
-            return Ok(machine);
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }
