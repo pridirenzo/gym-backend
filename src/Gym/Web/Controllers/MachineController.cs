@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces;
-using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -19,14 +18,7 @@ namespace Web.Controllers
         [HttpGet("GetAllMachine")]
         public IActionResult GetAllMachines()
         {
-            var machines = _machineService.GetAllMachines();
-
-            if (machines == null || !machines.Any())
-            {
-                return NotFound("No machines found");
-            }
-
-            return Ok(machines);
+            return Ok(_machineService.GetAllMachines());
         }
 
         [HttpGet("GetById/{machineId}")]
@@ -40,8 +32,6 @@ namespace Web.Controllers
             {
                 return NotFound(ex.Message);
             }
-
-            return Ok(machine);
         }
     }
 }
