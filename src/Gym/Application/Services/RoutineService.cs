@@ -36,6 +36,7 @@ namespace Application.Services
         public RoutineReadDto GetRoutineById(int routineId)
         {
             var routine = _routineRepository.GetRoutineById(routineId);
+            if (routine == null) throw new KeyNotFoundException($"The given key '{routineId}' does not correspond to an exercise.");
             var routineDto = _mapper.Map<RoutineReadDto>(routine);
             routineDto.ExercisesId = _routineExerciseService.GetRoutineExercises(routineId);
             return routineDto;

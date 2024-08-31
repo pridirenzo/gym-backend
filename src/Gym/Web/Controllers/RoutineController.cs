@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models;
+using Application.Services;
 using Domain.Enum;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,14 @@ namespace Web.Controllers
         [HttpGet("GetById/{routineId}")]
         public IActionResult GetRoutineById([FromRoute] int routineId)
         {
-            return Ok(_routineService.GetRoutineById(routineId));
+            try
+            {
+                return Ok(_routineService.GetRoutineById(routineId));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("GetRoutineByDifficulty")]
