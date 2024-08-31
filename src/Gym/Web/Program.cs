@@ -37,6 +37,19 @@ builder.Services.AddScoped<IExerciseService, ExerciseService>();
 #endregion
 
 
+// Agregar servicios de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // URL del frontend
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,6 +62,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+// Usar la política de CORS
+app.UseCors("AllowSpecificOrigin");
 
 app.MapControllers();
 
