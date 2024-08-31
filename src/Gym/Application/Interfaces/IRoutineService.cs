@@ -7,8 +7,8 @@ namespace Application.Interfaces
     public interface IRoutineService
     {
         IEnumerable<RoutineReadDto> GetAllRoutine();
-        IEnumerable<RoutineDto> GetRoutineByDifficulty(Difficulty difficulty);
-        RoutineDto GetRoutineById(int routineId);
+        IEnumerable<RoutineReadDto> GetRoutineByDifficulty(Difficulty difficulty);
+        RoutineReadDto GetRoutineById(int routineId);
         OperationResult CreateRoutine(RoutineDto routine);
         OperationResult DeleteRoutine(int routineId);
         OperationResult UpdateRoutine(int routineId, RoutineDto routine);

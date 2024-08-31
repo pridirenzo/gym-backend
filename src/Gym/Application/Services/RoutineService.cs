@@ -13,11 +13,13 @@ namespace Application.Services
     {
         private readonly IRoutineRepository _routineRepository;
         private readonly IMapper _mapper;
+        private readonly IRoutineExerciseService _routineExerciseService;
         private readonly IOperationResultService _operationResultService;
-        public RoutineService(IRoutineRepository routineRepository, IMapper mapper, IOperationResultService operationResultService)
+        public RoutineService(IRoutineRepository routineRepository, IMapper mapper, IRoutineExerciseService routineExerciseService, IOperationResultService operationResultService)
         {
             _routineRepository = routineRepository;
             _mapper = mapper;
+            _routineExerciseService = routineExerciseService;
             _operationResultService = operationResultService;
         }
         public OperationResult CreateRoutine(RoutineDto routineDto)
@@ -26,21 +28,17 @@ namespace Application.Services
             var newRoutine = new Routine(routineDto.Name, routineDto.Duration, routineDto.Difficulty);
             _routineRepository.CreateRoutine(newRoutine);
 
-            foreach (int i in routineDto.ExercisesId)
-            {
-                var newRoutineExercise = new RoutineExercise(newRoutine.RoutineId, i);
-                _routineRepository.CreateRoutineExcercise(newRoutineExercise);
-            }
-            // Crea la entidad de unión RoutineExercise para asociar la rutina y el ejercicio
-            // Guarda la entidad de unión en el repositorio correspondiente
+            _routineExerciseService.CreateRoutineExercises(newRoutine.RoutineId, routineDto.ExercisesId);
 
             return _operationResultService.CreateSuccessResult("Routine Created");
         }
 
-        public RoutineDto GetRoutineById(int routineId)
+        public RoutineReadDto GetRoutineById(int routineId)
         {
-            var getRoutine = _routineRepository.GetRoutineById(routineId);
-            return _mapper.Map<RoutineDto>(getRoutine);
+            var routine = _routineRepository.GetRoutineById(routineId);
+            var routineDto = _mapper.Map<RoutineReadDto>(routine);
+            routineDto.ExercisesId = _routineExerciseService.GetRoutineExercises(routineId);
+            return routineDto;
         }
 
         public OperationResult DeleteRoutine(int routineId)
@@ -48,6 +46,7 @@ namespace Application.Services
             var routine = _routineRepository.GetRoutineById(routineId);
             if (routine != null)
             {
+                _routineExerciseService.DeleteRoutineExercises(routineId);
                 _routineRepository.DeleteRoutine(routine);
                 return _operationResultService.CreateSuccessResult("Routine Deleted");
             }
@@ -56,14 +55,24 @@ namespace Application.Services
 
         public IEnumerable<RoutineReadDto> GetAllRoutine()
         {
-            var routine = _routineRepository.GetAllRoutine();
-            return _mapper.Map<IEnumerable<RoutineReadDto>>(routine);
+            var routines = _routineRepository.GetAllRoutine();
+            var routineDtos = _mapper.Map<IEnumerable<RoutineReadDto>>(routines);
+            foreach (var routineDto in routineDtos)
+            {
+                routineDto.ExercisesId = _routineExerciseService.GetRoutineExercises(routineDto.RoutineId);
+            }
+            return routineDtos;
         }
 
-        public IEnumerable<RoutineDto> GetRoutineByDifficulty(Difficulty difficulty)
+        public IEnumerable<RoutineReadDto> GetRoutineByDifficulty(Difficulty difficulty)
         {
-            var routine = _routineRepository.GetRoutineByDifficulty(difficulty);
-            return _mapper.Map<IEnumerable<RoutineDto>>(routine);
+            var routines = _routineRepository.GetRoutineByDifficulty(difficulty);
+            var routineDtos = _mapper.Map<IEnumerable<RoutineReadDto>>(routines);
+            foreach (var routineDto in routineDtos)
+            {
+                routineDto.ExercisesId = _routineExerciseService.GetRoutineExercises(routineDto.RoutineId);
+            }
+            return routineDtos;
         }
 
         public OperationResult UpdateRoutine(int routineId, RoutineDto routineDto)
@@ -77,6 +86,7 @@ namespace Application.Services
             routine.Duration = routineDto.Duration;
             routine.Difficulty = routineDto.Difficulty;
 
+            _routineExerciseService.UpdateRoutineExercises(routineId, routineDto.ExercisesId);
             _routineRepository.UpdateRoutine(routine);
             return _operationResultService.CreateSuccessResult("Review Created");
         }
