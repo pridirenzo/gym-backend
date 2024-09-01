@@ -1,13 +1,14 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.Services
 {
     public class RoutineExerciseService : IRoutineExerciseService
     { 
         private readonly IRoutineExerciseRepository _routineExerciseRepository;
-        public RoutineExerciseService(IRoutineExerciseRepository routineExerciseRepository, IExerciseService exerciseService)
+        public RoutineExerciseService(IRoutineExerciseRepository routineExerciseRepository)
         {
             _routineExerciseRepository = routineExerciseRepository;
         }

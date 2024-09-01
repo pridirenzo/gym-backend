@@ -24,5 +24,11 @@ namespace Infrastructure.Data
         {
             return _context.Exercises.Find(id);
         }
+
+        public ICollection<Exercise> GetExercisesByIds(IList<int> ids)
+        {
+            Console.WriteLine(ids);
+            return _context.Exercises.Where(e => ids.Contains(e.ExerciseId)).ToList();
+        }
     }
 }

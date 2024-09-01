@@ -34,6 +34,7 @@ builder.Services.AddScoped<IRoutineExerciseService, RoutineExerciseService>();
 builder.Services.AddScoped<IOperationResultService, OperationResultService>();
 builder.Services.AddScoped<IMachineService, MachineService>();
 builder.Services.AddScoped<IExerciseService, ExerciseService>();
+builder.Services.AddScoped<IExercisesValidatorService, ExercisesValidatorService>();
 #endregion
 
 

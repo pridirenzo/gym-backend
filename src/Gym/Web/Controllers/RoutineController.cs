@@ -1,9 +1,9 @@
 ﻿using Application.Interfaces;
 using Application.Models;
-using Application.Services;
 using Domain.Enum;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Controllers
 {
@@ -45,12 +45,23 @@ namespace Web.Controllers
         [HttpPost("CreateRoutine")]
         public IActionResult CreateRoutine([FromBody] RoutineDto routineDto)
         {
-            var result = _routineService.CreateRoutine(routineDto);
-            if (result.Success)
+            try
             {
-                return Ok(result.Message);
+                var result = _routineService.CreateRoutine(routineDto);
+                if (result.Success)
+                {
+                    return Ok(result.Message);
+                }
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("DeleteRoutine/{routineId}")]
@@ -67,13 +78,24 @@ namespace Web.Controllers
         [HttpPut("UpdateRoutine/{routineId}")]
         public IActionResult UpdateRoutine([FromRoute] int routineId, [FromBody] RoutineDto routineDto)
         {
-            var result = _routineService.UpdateRoutine(routineId, routineDto);
-            if (result.Success)
+            try
             {
-                _routineService.UpdateRoutine(routineId, routineDto);
-                return Ok(result.Message);
+                var result = _routineService.UpdateRoutine(routineId, routineDto);
+                if (result.Success)
+                {
+                    _routineService.UpdateRoutine(routineId, routineDto);
+                    return Ok(result.Message);
+                }
+                return BadRequest(result.Message);
             }
-            return BadRequest(result.Message);
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }

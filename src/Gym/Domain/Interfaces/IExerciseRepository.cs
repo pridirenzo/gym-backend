@@ -8,5 +8,6 @@ namespace Domain.Interfaces
         ICollection<Exercise> GetAllExercise();
         ICollection<Exercise> GetExerciseByCategory(Category category);
         Exercise GetExerciseById(int id);
+        ICollection<Exercise> GetExercisesByIds(IList<int> ids);
     }
 }

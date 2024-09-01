@@ -15,15 +15,19 @@ namespace Application.Services
         private readonly IMapper _mapper;
         private readonly IRoutineExerciseService _routineExerciseService;
         private readonly IOperationResultService _operationResultService;
-        public RoutineService(IRoutineRepository routineRepository, IMapper mapper, IRoutineExerciseService routineExerciseService, IOperationResultService operationResultService)
+        private readonly IExercisesValidatorService _exercisesValidatorService;
+        public RoutineService(IRoutineRepository routineRepository, IMapper mapper, IRoutineExerciseService routineExerciseService, IOperationResultService operationResultService, IExercisesValidatorService exercisesValidatorService)
         {
             _routineRepository = routineRepository;
             _mapper = mapper;
             _routineExerciseService = routineExerciseService;
             _operationResultService = operationResultService;
+            _exercisesValidatorService = exercisesValidatorService;
+
         }
         public OperationResult CreateRoutine(RoutineDto routineDto)
         {
+            _exercisesValidatorService.ValidateExercises(routineDto.ExercisesId);
 
             var newRoutine = new Routine(routineDto.Name, routineDto.Duration, routineDto.Difficulty);
             _routineRepository.CreateRoutine(newRoutine);
@@ -78,7 +82,10 @@ namespace Application.Services
 
         public OperationResult UpdateRoutine(int routineId, RoutineDto routineDto)
         {
+            _exercisesValidatorService.ValidateExercises(routineDto.ExercisesId);
+
             var routine = _routineRepository.GetRoutineById(routineId);
+            
             if (routine == null)
             {
                 return _operationResultService.CreateFailureResult("Routine Not Found");
